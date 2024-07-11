@@ -4,7 +4,6 @@
     "outDir": "dist",
     "lib": ["esnext"],
     "esModuleInterop": true,
-    "allowJs": true,
   },
   "include": ["src/**/*"],
 }
