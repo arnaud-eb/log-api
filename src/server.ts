@@ -2,6 +2,7 @@ import express from "express";
 import router from "./router";
 import morgan from "morgan";
 import cors from "cors";
+import { protect } from "./modules/auth";
 
 const app = express();
 
@@ -23,7 +24,9 @@ app.get("/", (req, res) => {
 // for everyting that has "/api" in the url, use this router
 // e.g. /api/product, /api/update, /api/updatepoint
 // mount the router back to the main express app on the /api path
-app.use("/api", router);
+// before letting access to the route handlers
+// we are checking authentication with a custom middleware (protect)
+app.use("/api", protect, router);
 
 export default app;
 
