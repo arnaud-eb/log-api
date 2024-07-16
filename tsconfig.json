@@ -4,6 +4,7 @@
     "outDir": "dist",
     "lib": ["esnext"],
     "esModuleInterop": true,
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
   },
   "include": ["src/**/*"],
 }

@@ -3,6 +3,7 @@ import router from "./router";
 import morgan from "morgan";
 import cors from "cors";
 import { protect } from "./modules/auth";
+import { createNewUser, signIn } from "./handlers/user";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.get("/", (req, res) => {
 // we are checking authentication with a custom middleware (protect)
 app.use("/api", protect, router);
 
-export default app;
+app.post("/user", createNewUser);
+app.post("/signin", signIn);
 
-// next(): go to the next thing in the stack which could be another middleware or the final handler
+export default app;
