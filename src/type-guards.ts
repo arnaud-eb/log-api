@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 
-export const isUser = (user: any): user is User => {
+export const isUser = (user: any): user is Pick<User, "id" | "username"> => {
   return (
     user &&
     typeof user === "object" &&

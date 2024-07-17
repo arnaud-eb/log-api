@@ -11,6 +11,7 @@ export const comparePasswords = (
   password: string,
   hash: string
 ): Promise<boolean> => {
+  // there is also a sync version of this function
   return bcrypt.compare(password, hash);
 };
 
@@ -18,6 +19,7 @@ export const comparePasswords = (
  * hash user's password so we do not store them as plain text in the db.
  */
 export const hashPassword = (password: string): Promise<string> => {
+  // there is also a sync version of this function
   return bcrypt.hash(password, 5);
 };
 

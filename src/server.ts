@@ -7,13 +7,13 @@ import { createNewUser, signIn } from "./handlers/user";
 
 const app = express();
 
-// allows requests from any origin
+// middleware that allows requests from any origin
 app.use(cors());
-// logs requests
+// middleware that logs requests
 app.use(morgan("dev"));
-// parses json bodies - client can send json data
+// middleware that parses json bodies - client can send json data
 app.use(express.json());
-// parse urlencoded bodies - client can add query strings or params
+// middleware that parses urlencoded bodies - client can add query strings or params
 // this middleware will parse them and make them available on the req object (req.query or req.params)
 app.use(express.urlencoded({ extended: true }));
 
