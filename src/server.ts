@@ -29,7 +29,9 @@ app.get("/", (req, res) => {
 // we are checking authentication with a custom middleware (protect)
 app.use("/api", protect, router);
 
+// TODO: add user input validation
 app.post("/user", createNewUser);
+// TODO: add user input validation
 app.post("/signin", signIn);
 
 export default app;

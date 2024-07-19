@@ -5,7 +5,7 @@ import { handleInputErrors } from "./modules/middleware";
 import {
   createNewProduct,
   deleteProduct,
-  getProduct,
+  getOneProduct,
   getProducts,
   updateProduct,
 } from "./handlers/product";
@@ -35,11 +35,11 @@ const router = Router();
 // get all products
 router.get("/product", getProducts);
 // get a product by id
-router.get("/product/:id", getProduct);
+router.get("/product/:id", getOneProduct);
 // update a product by id
 router.put(
   "/product/:id",
-  // input validator: req.body that is an object
+  // input validator (middleware): req.body that is an object
   // should have a field on it called "name" of string type
   [body("name").exists().isString(), handleInputErrors],
   updateProduct
