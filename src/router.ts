@@ -12,7 +12,7 @@ import {
 import {
   createNewUpdate,
   deleteUpdate,
-  getUpdate,
+  getOneUpdate,
   getUpdates,
   updateUpdate,
 } from "./handlers/update";
@@ -60,7 +60,7 @@ router.delete("/product/:id", deleteProduct);
 // get all updates
 router.get("/update", getUpdates);
 // get an update by id
-router.get("/update/:id", getUpdate);
+router.get("/update/:id", getOneUpdate);
 // update an update by id
 router.put(
   "/update/:id",
