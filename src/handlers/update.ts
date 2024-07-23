@@ -34,6 +34,8 @@ export const getUpdates = async (req: Request, res: Response) => {
 };
 
 export const getOneUpdate = async (req: Request, res: Response) => {
+  // Should we also ensure the update ID is associated with a product
+  // owned by the currently logged-in user?
   const userId = req.user.id;
   const updateId = req.params.id;
   const update = await prisma.update.findUnique({
@@ -100,10 +102,14 @@ export const updateUpdate = async (req: Request, res: Response) => {
 
 export const createNewUpdate = async (req: Request, res: Response) => {
   // 1st: make sure that the product id belongs to the logged-in user
+  const userId = req.user.id;
   const { productId } = req.body;
   const product = await prisma.product.findUnique({
     where: {
-      id: productId,
+      id_belongsToId: {
+        id: productId,
+        belongsToId: userId,
+      },
     },
   });
   if (!product) {
@@ -121,13 +127,39 @@ export const createNewUpdate = async (req: Request, res: Response) => {
 export const deleteUpdate = async (req: Request, res: Response) => {
   const userId = req.user.id;
   const updateId = req.params.id;
+  const products = await prisma.product.findMany({
+    where: {
+      belongsToId: userId,
+    },
+    include: {
+      updates: true,
+    },
+  });
+
+  const updates = products.reduce(
+    (allUpdates, { updates }) => [...allUpdates, ...updates],
+    []
+  );
+
+  const match = updates.find((update) => update.id === updateId);
+
+  if (!match) {
+    // TODO: handle error
+    res.json({ message: "nope" });
+  }
+
   const deleted = await prisma.update.delete({
     where: {
       id: updateId,
-      product: {
-        belongsToId: userId,
-      },
     },
   });
+  // const deleted = await prisma.update.delete({
+  //   where: {
+  //     id: updateId,
+  //     product: {
+  //       belongsToId: userId,
+  //     },
+  //   },
+  // });
   res.json({ data: deleted });
 };
