@@ -34,4 +34,10 @@ app.post("/user", createNewUser);
 // TODO: add user input validation
 app.post("/signin", signIn);
 
+// error handler
+app.use((err, req, res, next) => {
+  console.log("hey hey", err);
+  res.json({ message: `had an error ${err.message}` });
+});
+
 export default app;
