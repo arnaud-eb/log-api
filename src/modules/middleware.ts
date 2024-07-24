@@ -14,3 +14,13 @@ export const handleInputErrors = (
   }
   next();
 };
+
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  if (err.type === "auth") {
+    return res.status(401).json({ message: "unauthorized" });
+  }
+  if (err.type === "input") {
+    return res.status(400).json({ message: "invalid input" });
+  }
+  return res.status(500).json({ message: "oops, that's on us" });
+};

@@ -41,13 +41,13 @@ router.put(
   "/product/:id",
   // input validator (middleware): req.body that is an object
   // should have a field on it called "name" of string type
-  [body("name").exists().isString(), handleInputErrors],
+  [body("name").exists().isString().isLength({ max: 255 }), handleInputErrors],
   updateProduct
 );
 // create a product
 router.post(
   "/product",
-  [body("name").exists().isString(), handleInputErrors],
+  [body("name").exists().isString().isLength({ max: 255 }), handleInputErrors],
   createNewProduct
 );
 // delete a product by id

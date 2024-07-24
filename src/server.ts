@@ -4,6 +4,8 @@ import morgan from "morgan";
 import cors from "cors";
 import { protect } from "./modules/auth";
 import { createNewUser, signIn } from "./handlers/user";
+import { errorHandler, handleInputErrors } from "./modules/middleware";
+import { body } from "express-validator";
 
 const app = express();
 
@@ -29,15 +31,27 @@ app.get("/", (req, res) => {
 // we are checking authentication with a custom middleware (protect)
 app.use("/api", protect, router);
 
-// TODO: add user input validation
-app.post("/user", createNewUser);
-// TODO: add user input validation
-app.post("/signin", signIn);
+app.post(
+  "/user",
+  [
+    body("username").exists().isString(),
+    body("password").exists().isString(),
+    handleInputErrors,
+  ],
+  createNewUser
+);
 
-// error handler
-app.use((err, req, res, next) => {
-  console.log("hey hey", err);
-  res.json({ message: `had an error ${err.message}` });
-});
+app.post(
+  "/signin",
+  [
+    body("username").exists().isString(),
+    body("password").exists().isString(),
+    handleInputErrors,
+  ],
+  signIn
+);
+
+// error handler middleware
+app.use(errorHandler);
 
 export default app;
