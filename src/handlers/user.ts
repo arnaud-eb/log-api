@@ -1,13 +1,9 @@
-import { Request, Response, NextFunction } from "express";
 import prisma from "../db";
 import { comparePasswords, createJWT, hashPassword } from "../modules/auth";
+import { RequestHandler } from "../types";
 
 // allow user to be able to sign up
-export const createNewUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createNewUser: RequestHandler = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const hashedPassword = await hashPassword(password);
@@ -21,17 +17,14 @@ export const createNewUser = async (
     const token = createJWT(user);
     res.json({ token });
   } catch (error) {
+    error.type = "input";
     next(error);
   }
 };
 
 // allow user to be able to sign in
 // like for createNewUser, user has no token yet
-export const signIn = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const signIn: RequestHandler = async (req, res, next) => {
   try {
     const { username, password } = req.body;
     // 1st step: check that the username exists

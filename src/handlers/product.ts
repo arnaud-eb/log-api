@@ -1,12 +1,8 @@
-import { NextFunction, Request, Response } from "express";
 import prisma from "../db";
+import { RequestHandler } from "../types";
 
 // Get all
-export const getProducts = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getProducts: RequestHandler = async (req, res, next) => {
   try {
     const { products } = await prisma.user.findUnique({
       where: {
@@ -23,11 +19,7 @@ export const getProducts = async (
 };
 
 // Get one
-export const getOneProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getOneProduct: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const productId = req.params.id;
@@ -46,11 +38,7 @@ export const getOneProduct = async (
   }
 };
 
-export const updateProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const updateProduct: RequestHandler = async (req, res, next) => {
   try {
     const productId = req.params.id;
     const userId = req.user.id;
@@ -72,11 +60,7 @@ export const updateProduct = async (
   }
 };
 
-export const createNewProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const createNewProduct: RequestHandler = async (req, res, next) => {
   try {
     const { name } = req.body;
     const product = await prisma.product.create({
@@ -91,11 +75,7 @@ export const createNewProduct = async (
   }
 };
 
-export const deleteProduct = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const deleteProduct: RequestHandler = async (req, res, next) => {
   try {
     const productId = req.params.id;
     const userId = req.user.id;

@@ -5,5 +5,8 @@ declare global {
     interface Request {
       user?: Pick<User, "id" | "username">;
     }
+    interface ErrorRequestHandler {
+      type?: "auth" | "input";
+    }
   }
 }

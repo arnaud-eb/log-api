@@ -47,15 +47,13 @@ export const protect = (req: Request, res: Response, next: NextFunction) => {
   // protect rejects any request that does not have a bearer token in the authorization header
   if (!bearer) {
     res.status(401);
-    res.json({ message: "Not authorized" });
-    return;
+    return res.json({ message: "Not authorized" });
   }
 
   const [, token] = bearer.split(" ");
   if (!token) {
     res.status(401);
-    res.json({ message: "Not valid token" });
-    return;
+    return res.json({ message: "Not valid token" });
   }
 
   try {

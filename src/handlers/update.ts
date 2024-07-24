@@ -1,11 +1,7 @@
-import { NextFunction, Request, Response } from "express";
 import prisma from "../db";
+import { RequestHandler } from "../types";
 
-export const getUpdates = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getUpdates: RequestHandler = async (req, res, next) => {
   try {
     // const { products } = await prisma.user.findUnique({
     //   where: {
@@ -41,11 +37,7 @@ export const getUpdates = async (
   }
 };
 
-export const getOneUpdate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getOneUpdate: RequestHandler = async (req, res, next) => {
   try {
     // Should we also ensure the update ID is associated with a product
     // owned by the currently logged-in user?
@@ -65,11 +57,8 @@ export const getOneUpdate = async (
   }
 };
 
-export const updateUpdate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+// TODO: separate the try-catches for the two async functions
+export const updateUpdate: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const updateId = req.params.id;
@@ -97,6 +86,7 @@ export const updateUpdate = async (
       // update id does not belong to the user
       // TODO: handle error
       res.json({ message: "nope" });
+      return;
     }
 
     // 2nd: update the update
@@ -124,11 +114,8 @@ export const updateUpdate = async (
   }
 };
 
-export const createNewUpdate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+// TODO: separate the try-catches for the two async functions
+export const createNewUpdate: RequestHandler = async (req, res, next) => {
   try {
     // 1st: make sure that the product id belongs to the logged-in user
     const userId = req.user.id;
@@ -145,6 +132,7 @@ export const createNewUpdate = async (
       // product does not belong to the user
       // TODO: handle error
       res.json({ message: "nope" });
+      return;
     }
     // 2nd: create the update if product belongs to the signed in user
     const update = await prisma.update.create({
@@ -156,11 +144,8 @@ export const createNewUpdate = async (
   }
 };
 
-export const deleteUpdate = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+// TODO: separate the try-catches for the two async functions
+export const deleteUpdate: RequestHandler = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const updateId = req.params.id;
@@ -183,6 +168,7 @@ export const deleteUpdate = async (
     if (!match) {
       // TODO: handle error
       res.json({ message: "nope" });
+      return;
     }
 
     const deleted = await prisma.update.delete({
