@@ -1,18 +1,18 @@
-import prisma from "../db";
-import { RequestHandler } from "../types";
+import prisma from "../db.ts";
+import { RequestHandler } from "../types.ts";
 
 // Get all
 export const getProducts: RequestHandler = async (req, res, next) => {
   try {
-    const { products } = await prisma.user.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
-        id: req.user.id,
+        id: req.user?.id,
       },
       include: {
         products: true,
       },
     });
-    res.json({ data: products });
+    if (user?.products) res.json({ data: user.products });
   } catch (error) {
     next(error);
   }
@@ -21,7 +21,7 @@ export const getProducts: RequestHandler = async (req, res, next) => {
 // Get one
 export const getOneProduct: RequestHandler = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const userId = req.user?.id || "";
     const productId = req.params.id;
     const product = await prisma.product.findUnique({
       where: {
@@ -41,7 +41,7 @@ export const getOneProduct: RequestHandler = async (req, res, next) => {
 export const updateProduct: RequestHandler = async (req, res, next) => {
   try {
     const productId = req.params.id;
-    const userId = req.user.id;
+    const userId = req.user?.id || "";
     const { name } = req.body;
     const updated = await prisma.product.update({
       where: {
@@ -66,7 +66,7 @@ export const createNewProduct: RequestHandler = async (req, res, next) => {
     const product = await prisma.product.create({
       data: {
         name,
-        belongsToId: req.user.id,
+        belongsToId: req.user?.id || "",
       },
     });
     res.json({ data: product });
@@ -78,7 +78,7 @@ export const createNewProduct: RequestHandler = async (req, res, next) => {
 export const deleteProduct: RequestHandler = async (req, res, next) => {
   try {
     const productId = req.params.id;
-    const userId = req.user.id;
+    const userId = req.user?.id || "";
     const deleted = await prisma.product.delete({
       where: {
         id_belongsToId: {

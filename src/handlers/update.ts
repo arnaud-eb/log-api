@@ -1,5 +1,5 @@
-import prisma from "../db";
-import { RequestHandler } from "../types";
+import prisma from "../db.ts";
+import { RequestHandler } from "../types.ts";
 
 export const getUpdates: RequestHandler = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ export const getUpdates: RequestHandler = async (req, res, next) => {
     // });
     const products = await prisma.product.findMany({
       where: {
-        belongsToId: req.user.id,
+        belongsToId: req.user?.id,
       },
       include: {
         updates: true,

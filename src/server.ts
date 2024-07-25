@@ -1,10 +1,10 @@
 import express from "express";
-import router from "./router";
+import router from "./router.ts";
 import morgan from "morgan";
 import cors from "cors";
-import { protect } from "./modules/auth";
-import { createNewUser, signIn } from "./handlers/user";
-import { errorHandler, handleInputErrors } from "./modules/middleware";
+import { protect } from "./modules/auth.ts";
+import { createNewUser, signIn } from "./handlers/user.ts";
+import { errorHandler, handleInputErrors } from "./modules/middleware.ts";
 import { body } from "express-validator";
 
 const app = express();
@@ -51,7 +51,7 @@ app.post(
   signIn
 );
 
-// error handler middleware
+// error handling middleware
 app.use(errorHandler);
 
 export default app;

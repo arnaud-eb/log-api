@@ -1,6 +1,6 @@
-import prisma from "../db";
-import { comparePasswords, createJWT, hashPassword } from "../modules/auth";
-import { RequestHandler } from "../types";
+import prisma from "../db.ts";
+import { comparePasswords, createJWT, hashPassword } from "../modules/auth.ts";
+import { RequestHandler } from "../types.ts";
 
 // allow user to be able to sign up
 export const createNewUser: RequestHandler = async (req, res, next) => {

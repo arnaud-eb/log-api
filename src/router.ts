@@ -1,28 +1,28 @@
 import { UPDATE_STATUS } from "@prisma/client";
 import { Router } from "express";
 import { body } from "express-validator";
-import { handleInputErrors } from "./modules/middleware";
+import { handleInputErrors } from "./modules/middleware.ts";
 import {
   createNewProduct,
   deleteProduct,
   getOneProduct,
   getProducts,
   updateProduct,
-} from "./handlers/product";
+} from "./handlers/product.ts";
 import {
   createNewUpdate,
   deleteUpdate,
   getOneUpdate,
   getUpdates,
   updateUpdate,
-} from "./handlers/update";
+} from "./handlers/update.ts";
 import {
   createNewUpdatePoint,
   deleteUpdatePoint,
   getUpdatePoint,
   getUpdatePoints,
   updateUpdatePoint,
-} from "./handlers/updatePoint";
+} from "./handlers/updatePoint.ts";
 
 const router = Router();
 

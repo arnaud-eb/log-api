@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
-import { isUser } from "../type-guards";
+import { isUser } from "../type-guards.ts";
 
 /**
  * Compares a plaintext password with a hashed password to check if they match.
